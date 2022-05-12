@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { ADD_COUNT, SUB_COUNT, INIT_COUNT } from "../redux/actions";
+import { makeMapStateToProps } from "../redux/selector";
 
 const Counter = (props) => {
-  console.log(`unter Render:${props.index}`);
+  console.log(`Counter Render:${props.index}`);
   const { init, count, clickAdd, clickSub } = props;
 
   useEffect(() => {
@@ -20,12 +21,12 @@ const Counter = (props) => {
 };
 
 const mapStateToProps = (state, ownProps) => {
+  console.log(`mapStateToProps:${ownProps.index}`, state);
+
   if (!state.count[ownProps.index]) {
-    return ownProps;
+    return {};
   }
 
-  //  console.log(state.count[0].value)
-  //  return { count: state.count[ownProps.index].value };
   return { count: state.count[ownProps.index].value };
 };
 
@@ -48,4 +49,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+//export default connect(mapStateToProps, mapDispatchToProps)(Counter);
+export default connect(makeMapStateToProps, mapDispatchToProps)(Counter);
